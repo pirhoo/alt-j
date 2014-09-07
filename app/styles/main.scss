@@ -1,0 +1,132 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+$body-bg: #000;
+$link-color: #F3F0F7;
+
+
+// bower:scss
+@import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
+// endbower
+
+
+.videos {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+
+    &__overlay {
+        z-index:5;
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:50%;
+        margin-left:-2000px;
+        border-left:2000px solid #005AB5;
+        border-right:2000px solid #0BD627;
+        opacity:0.5;
+        @include skew(-10deg, 0);
+        @include transition(0.6s);
+    }
+
+    &--playing &__overlay {
+        border-width:0;
+        margin-left:0;
+    }
+
+    &__wrapper {
+        z-index:0;
+        position:absolute;
+        height:100%;
+        top:0;
+        bottom:0;
+        overflow:hidden;
+        @include skew(-10deg, 0);
+
+        &:after {
+            content:"";
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+        }
+
+        &--one {
+            width:50%;
+        }
+
+        &--two {
+            width:50%;
+            right:0;
+        }
+
+        &__player {
+            @include skew(10deg, 0);
+            position:absolute;
+            top:0;
+            bottom:0;
+        }
+
+        &--one &__player {
+            left:0;
+        }
+
+        &--two &__player {
+            right:0;
+        }
+    }
+}
+
+
+.controls {
+
+    &:after {
+        z-index:10;
+        content:"";
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:50%;
+        width:2px;
+        background:#F3F0F7;
+        margin-left:-1px;
+        @include skew(-10deg, 0);
+    }
+
+    &__play {
+        z-index:20;
+        position:fixed;
+        top:50%;
+        left:50%;
+        margin-left:-25px;
+        margin-top:-25px;
+        height:50px;
+        width:50px;
+        background:#F3F0F7;
+        border-radius: 0;
+
+        @include rotate(-35deg);
+        i {
+            @include rotate(35deg);
+        }
+
+        &, &:focus, &:active, &:hover, &::-moz-focus-inner {
+            border:0;
+            outline: 0 !important;
+            color:#9D6995;
+        }
+    }
+
+    &__footer {
+        text-align: center;
+        z-index:30;
+        position:fixed;
+        bottom:0;
+        left:0;
+        font-size:0.9em;
+        color: #F3F0F7;
+        padding:2px 5px;
+        background:rgba(#9D6995, 0.2);
+    }
+}

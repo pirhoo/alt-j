@@ -19,6 +19,7 @@ Install `node` and `npm` then run:
 
 ```
 npm install
+bower install
 ```
 
 You can now start serving static files with gulp!

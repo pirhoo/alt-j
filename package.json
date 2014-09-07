@@ -1,5 +1,6 @@
 {
   "name": "alt-j",
+  "repository": "https://github.com/Pirhoo/alt-j/",
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {

@@ -29,7 +29,7 @@ gulp serve
 
 ## Deploy on Git Pages
 
-Run the following command s
+Run the following commands
 
 ```
 gulp

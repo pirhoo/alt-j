@@ -20,11 +20,11 @@
             playerOneYT.seekTo( playerTwoYT.getCurrentTime() );
 
             if( playerOneYT.getPlayerState() !== 1) {
-                $videos.addClass('videos--playing');
+                $body.addClass('videos-playing');
                 playerOneYT.playVideo();
                 playerTwoYT.playVideo();
             } else {
-                $videos.removeClass('videos--playing');
+                $body.removeClass('videos-playing');
                 playerTwoYT.pauseVideo();
                 playerOneYT.pauseVideo();
             }
@@ -32,6 +32,7 @@
 
         // jQuery shorcuts
         var $videos = $('.videos');
+        var $body   = $('body');
         var $window = $(window);
         // Mains elements
         var playerOne   = document.getElementById('player-one');

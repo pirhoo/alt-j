@@ -31,7 +31,6 @@
         };
 
         // jQuery shorcuts
-        var $videos = $('.videos');
         var $body   = $('body');
         var $window = $(window);
         // Mains elements

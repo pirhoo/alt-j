@@ -2,6 +2,7 @@
 // generated on 2014-09-07 using generator-gulp-webapp 0.1.0
 
 var gulp = require('gulp');
+var deploy = require("gulp-gh-pages");
 
 // load plugins
 var $ = require('gulp-load-plugins')();
@@ -134,6 +135,7 @@ gulp.task('watch', ['connect', 'serve'], function () {
 });
 
 gulp.task('deploy', function () {
-    gulp.src("./dist/**/*")
-        .pipe(deploy(options));
+    gulp.src("./dist/**/*").pipe(deploy({
+        remoteUrl: "git@github.com:Pirhoo/alt-j.git"
+    }));
 });

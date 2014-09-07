@@ -3,6 +3,7 @@
     // Inject YouTube API script
     var tag = document.createElement('script');
     tag.src = '//www.youtube.com/player_api';
+
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -16,20 +17,16 @@
         };
 
         var togglePlayers = function() {
-            //Videos synchronization
-            playerOneYT.seekTo( playerTwoYT.getCurrentTime() );
-
-            if( playerOneYT.getPlayerState() !== 1) {
+            if(playerOneYT.getPlayerState() !== YT.PlayerState.PLAYING) {
                 $body.addClass('videos-playing');
-                playerOneYT.playVideo();
                 playerTwoYT.playVideo();
             } else {
                 $body.removeClass('videos-playing');
                 playerTwoYT.pauseVideo();
-                playerOneYT.pauseVideo();
             }
         };
 
+        var YT = window.YT;
         // jQuery shorcuts
         var $body   = $('body');
         var $window = $(window);
@@ -41,8 +38,10 @@
         var playersVars = {
             controls:0,
             showinfo:0,
-            autohide:1,
-            autoplay:1
+            autohide:0,
+            autoplay:0,
+            modestbranding: 1,
+            loop: 1
         };
         // Events bindings
         $(controlPlay).on('click', togglePlayers);
@@ -50,28 +49,39 @@
         $window.on('resize', resizePlayer);
         // Creates YT players
         // First player
-        var playerOneYT = new window.YT.Player(playerOne, {
+        var playerOneYT = new YT.Player(playerOne, {
             videoId: '-mhgfXgwdls',
             height: '100%',
             width: $window.width(),
             playerVars: playersVars,
             events: {
                 onReady: function() {
-                    playerOneYT.pauseVideo();
                     // Mutes one of the two videos
                     playerOneYT.mute();
+                },
+                onStateChange: function(event) {
+                    if(event.data === YT.PlayerState.PLAYING) {
+                        playerOneYT.seekTo( playerTwoYT.getCurrentTime() );
+                    }
                 }
             }
         });
         // Second player
-        var playerTwoYT = new window.YT.Player(playerTwo, {
+        var playerTwoYT = new YT.Player(playerTwo, {
             videoId: 'axTSc3e6wu8',
             height: '100%',
             width: $window.width(),
             playerVars: playersVars,
             events: {
-                onReady: function() {
-                    playerTwoYT.pauseVideo();
+                onStateChange: function(event) {
+                    if(event.data === YT.PlayerState.BUFFERING ) {
+                        playerOneYT.pauseVideo();
+                    } else if(event.data === YT.PlayerState.PLAYING) {
+                        playerOneYT.playVideoAt( playerTwoYT.getCurrentTime() );
+                        playerOneYT.playVideo();
+                    } else if(event.data === YT.PlayerState.PAUSED) {
+                        playerOneYT.pauseVideo();
+                    }
                 }
             }
         });
